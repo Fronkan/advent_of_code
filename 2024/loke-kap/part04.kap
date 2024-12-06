@@ -1,0 +1,18 @@
+solve1 ⇐ {
+	data ← ⊃ io:read "part04.txt"
+	w ← "XMAS"
+	(vs hs) ← -⍴data
+	n ← vs ⊖ hs ⌽ (3×⍴data) ↑ data
+	rot ← (⍳≢n)-≢data
+
+	checkOne ⇐ { +/ , w⍷⍵ }
+	+/ checkOne¨ n (⌽n) (⌽⍉n) (⊖⍉n) (rot⊖n) ((-rot)⊖n) ((rot)⊖⌽n) ((-rot)⊖⌽n)
+}
+
+solve2 ⇐ {
+	data ← ⊃ io:read "part04.txt"
+	coords ← (¯1 ¯1) (¯1 1) (0 0) (1 ¯1) (1 1)
+	⍝ There are only 4 valid combinations:
+	valid ← "MMASS" "MSAMS" "SMASM" "SSAMM"
+	+/ , valid ∊⍨ {(coords+⊂⍵) ⊇ data}¨ 1+⍳(⍴data)-2
+}
