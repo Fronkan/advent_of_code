@@ -19,3 +19,9 @@
 [submodule "2024/kjelloh-cpp"]
 	path = 2024/kjelloh-cpp
 	url = https://github.com/kjelloh/advent_of_code_2024.git
+[submodule "2024/lyxell-sqlite"]
+	path = 2024/lyxell-sqlite
+	url = https://github.com/lyxell/aoc2024-sqlite
+[submodule "2024/idrougge-swift"]
+	path = 2024/idrougge-swift
+	url = https://github.com/idrougge/advent_of_code_2024
