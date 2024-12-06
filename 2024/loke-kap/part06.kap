@@ -1,0 +1,45 @@
+solve1 ⇐ {
+	⍝ Function to turn one step to the right
+	rotate ⇐ ¯1⊖⊖⍉
+
+	m ← ⊃ io:read "part06.txt"
+	mapChars ← ">v<^"
+
+	⍝ First find the starting point and starting direction
+	startPos ← ↑ ⍸ m ∊ mapChars
+	startDir ← mapChars ⍳ startPos ⌷ m
+
+	⍝ Add a border around the map so we can detect when we overflow
+	m ← (1+⍴m) ↑ 2 int:proto m=@#
+
+	⍝ Scroll the board so that the starting point is in the top-left corner
+	(row col) ← startPos
+	m ← row ⊖ col ⌽ m
+	
+	⍝ Rotate map to the correct initial position
+	m ← (rotate⍣startDir) m
+
+	⍝ Flag to indicate that we're done
+	done ← 0
+	while (~done) {
+		⍝ Get the first row from the map
+		firstRow ← >1↑m
+
+		⍝ Find the first positive number on the row
+		⍝ If it's 1, it's an obstacle, if it's 2 we're done
+		⍝ This is checked in the last line of the loop
+		i ← 1 ⍳⍨ 0 < firstRow
+
+		⍝ Subtract 1 from each cell that we passed		
+		firstRow ← (¯1+)⍢(i↑) firstRow
+
+		⍝ Turn the entire board 90 degrees to the left
+		m ← rotate (i-1) ⌽ firstRow ⍪ 1↓m
+
+		⍝ Check if we're done
+		done ← 2 = i⊇firstRow
+	}
+	
+	⍝ Sum all the cells with a value less than -1
+	+/ ,m<0
+}
