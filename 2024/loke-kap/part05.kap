@@ -1,0 +1,23 @@
+orEmpty ⇐ { ⊃ (⍵≡null) ⊇ ⍵ ⍬ }
+
+solve1 ⇐ {
+	(a b) ← (0≠≢¨)⍛⊂ io:read "part05.txt"
+	rules ← ⍎¨¨ (@|≠)⍛⊂¨ a
+	pagesList ← ⍎¨¨ (@,≠)⍛⊂¨ b
+
+	checkPageSet ⇐ {
+		pages ← ⍵
+		isCorrect ← ∧/ {
+			res ← ⍵ ⍳⍨ pages
+			if ((≢pages) ∊ res) {
+				1
+			} else {
+				</res
+			}
+			
+		}¨ rules
+		isCorrect × pages[⌊(≢pages)÷2]
+	}
+
+	+/ checkPageSet¨ pagesList
+}
