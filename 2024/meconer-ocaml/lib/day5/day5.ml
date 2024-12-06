@@ -19,6 +19,7 @@ let getPair lst =
   let a = List.hd_exn lst in
   let b = List.hd_exn (List.tl_exn lst) in
   a,b
+  
 
 (* Converts a list of rules to a list of int tuples  *)
 let convertRules rules = 
@@ -36,7 +37,7 @@ let convertUpdates updates =
   
 let updates = convertUpdates updates
 
-  (* Checks two numbers to see if they are in order*)
+(* Checks two numbers to see if they are in order*)
 let rec isInOrder num1 num2 rules =
     match rules with 
     | [] -> true
