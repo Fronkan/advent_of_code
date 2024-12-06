@@ -1,50 +1,53 @@
-use std::{
-    fs::File,
-    io::{self, BufRead},
-    path::Path,
-};
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
-}
+use shared::read_lines;
 
 fn main() {
-    if let Ok(lines) = read_lines("./input") {
-        let (mut first, mut second) =
-            lines
-                .flatten()
-                .fold((Vec::<u32>::new(), Vec::<u32>::new()), |mut acc, line| {
-                    let numbers: Vec<_> = line
-                        .split_whitespace()
-                        .map(|n| n.parse::<u32>().unwrap())
-                        .collect();
+    let filename = "./input";
+    let (first, second) = read_sorted_lists(filename);
 
-                    acc.0.push(numbers[0]);
-                    acc.1.push(numbers[1]);
+    let sum = part1(&first, &second);
 
-                    return acc;
-                });
-        first.sort();
-        second.sort();
+    println!("part 1: {}", sum);
 
-        let sum: u32 = first
-            .iter()
-            .zip(second.iter())
-            .map(|x| {
-                let distance = x.0.abs_diff(*x.1);
-                distance
-            })
-            .sum();
+    let similarities = part2(&first, &second);
+    println!("part 2: {}", similarities);
+}
 
-        println!("part 1: {}", sum);
+fn part2(first: &Vec<u32>, second: &Vec<u32>) -> u32 {
+    let similarities = similiarities_sum(&first, &second);
+    similarities
+}
 
-        let similarities = similiarities_sum(&first, &second);
-        println!("part 2: {}", similarities);
-    }
+fn part1(first: &Vec<u32>, second: &Vec<u32>) -> u32 {
+    let sum: u32 = first
+        .iter()
+        .zip(second.iter())
+        .map(|x| {
+            let distance = x.0.abs_diff(*x.1);
+            distance
+        })
+        .sum();
+    sum
+}
+
+fn read_sorted_lists(filename: &str) -> (Vec<u32>, Vec<u32>) {
+    let lines = read_lines(filename);
+
+    let (mut first, mut second) =
+        lines.fold((Vec::<u32>::new(), Vec::<u32>::new()), |mut acc, line| {
+            let numbers: Vec<_> = line
+                .split_whitespace()
+                .map(|n| n.parse::<u32>().unwrap())
+                .collect();
+
+            acc.0.push(numbers[0]);
+            acc.1.push(numbers[1]);
+
+            return acc;
+        });
+    first.sort();
+    second.sort();
+
+    (first, second)
 }
 
 fn similiarities_sum(a: &Vec<u32>, b: &Vec<u32>) -> u32 {
@@ -64,4 +67,30 @@ fn similarity_score(needle: &u32, haystack: &Vec<u32>) -> u32 {
         .count();
 
     t as u32 * needle
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_lists() {
+        let (first, second) = read_sorted_lists("./input_example");
+        assert_eq!(first, vec![1, 2, 3, 3, 3, 4]);
+        assert_eq!(second, vec![3, 3, 3, 4, 5, 9]);
+    }
+
+    #[test]
+    fn test_part_1() {
+        let (first, second) = read_sorted_lists("./input_example");
+        let sum = part1(&first, &second);
+        assert_eq!(sum, 11);
+    }
+
+    #[test]
+    fn test_part_2() {
+        let (first, second) = read_sorted_lists("./input_example");
+        let sum = part2(&first, &second);
+        assert_eq!(sum, 31);
+    }
 }
