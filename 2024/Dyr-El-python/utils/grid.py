@@ -24,7 +24,7 @@ class Grid2D:
     @property
     def max_y(self):
         """Largest y in the grid (not necessarily populated if filtering)"""
-        return self.max_y
+        return self.m_maxy
 
     def __getitem__(self, key: tuple | Vec2D):
         """Indexing support for grid, works with tuple or Vec2D"""
@@ -43,3 +43,16 @@ class Grid2D:
         for pos, ch in self.m_data.items():
             if filter(ch, pos):
                 yield Vec2D(pos[0], pos[1]), ch
+    
+    def find(self, f):
+        return [pos for pos, ch in self.items() if f(pos, ch)]
+
+
+    def __str__(self):
+        lines = []
+        for y in range(0, self.max_y + 1):
+            line = []
+            for x in range(0, self.max_x + 1):
+                line.append(self[x, y])
+            lines.append(''.join(line))
+        return '\n'.join(lines)
