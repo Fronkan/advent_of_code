@@ -25,3 +25,6 @@
 [submodule "2024/idrougge-swift"]
 	path = 2024/idrougge-swift
 	url = https://github.com/idrougge/advent_of_code_2024
+[submodule "2024/ingo-rust"]
+	path = 2024/ingo-rust
+	url = https://github.com/ingomancer/AoC2024
