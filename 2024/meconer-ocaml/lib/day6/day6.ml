@@ -1,13 +1,13 @@
 open Core 
 
-(* let filename = "lib/day6/example.txt" *)
-let filename = "lib/day6/input.txt"
+let filename = "lib/day6/example.txt"
+(* let filename = "lib/day6/input.txt" *)
 let day6Input = In_channel.read_lines filename
 
 let width = String.length (List.hd_exn day6Input)
 let height = List.length day6Input
 
-type pos = { col : int; row : int }
+type pos = { col : int; row : int } 
 type direction = North | East | South | West
 type stateOfPos = Empty | Obstacle | OffGrid | Illegal
 
@@ -113,16 +113,6 @@ let rec doMoveWithObstacle accum pos direction obstaclePos =
   | OffGrid -> false
   | Empty | Obstacle -> doMoveWithObstacle (Set.add accum (string_of_pos_and_dir nextPos nextDir)) nextPos nextDir obstaclePos
   | _ -> raise (Failure "Illegal state")
-  
-(* let rec tryObstaclePositions accum posIdx = 
-  Printf.printf "%d\n" posIdx;
-  if posIdx >= width*height then accum
-  else 
-    match doMoveWithObstacle visitedPosSet startPos North (idxToCoord posIdx) with 
-    | false -> tryObstaclePositions accum (posIdx+1)
-    | true -> tryObstaclePositions (posIdx::accum) (posIdx+1)
-
-let r2 = tryObstaclePositions [] 0 *)
 
 let r2 = List.map ~f:(fun oPos -> doMoveWithObstacle visitedPosSet startPos North oPos ) obstaclePositions
 
