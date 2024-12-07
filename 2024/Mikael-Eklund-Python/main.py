@@ -21,7 +21,7 @@ def run_day(day: int) -> tuple[Any, Any]:
             #input_data = f.read().strip()
             input_data = f.read().split("\n")
         
-        # Time the solutions
+        # Time the solutions||
         start_time = time.time()
         part1_result = module.part1(input_data)
         part1_time = time.time() - start_time
@@ -45,7 +45,7 @@ def run_day(day: int) -> tuple[Any, Any]:
 
 def main():
     # Run a specific day or all days
-    run_day(4)  # Example: run day 1
+    run_day(7)  # Example: run day 1
     # Alternatively, you could loop through days here
 
 if __name__ == "__main__":
