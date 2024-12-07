@@ -1,0 +1,33 @@
+solveRow ⇐ {
+	i ← ⍵⍳@:
+	expected ← ⍎i↑⍵
+	numbers ← ⍎¨ (@\s≠)⍛⊂ (i+2)↓⍵
+
+	⍝ List of possible operators
+	ops ← ⍺
+
+	⍝ n = number of positions where an operator can go
+	n ← (≢numbers)-1
+
+	⍝ Create an array of the different operator variations
+	opCombinations ← ops ⊇⍨ ⍉ n ¯1 ⍴ (n⍴≢ops) ⊤ ⍳(≢ops)*n
+
+	⍝ Combine the ops and the numbers so we can reduce over them
+	r ← {⍵ ,¨ opCombinations}⍢(0 1↓) ((≢ops)*n) (≢numbers) ⍴ numbers
+
+	⍝ Compute all the different possible solutions and check if any
+	⍝ of them is equal to the expected value
+	expected × expected ∊ {⍺ ⍞(↑↓⍵) ↑⍵}/ r
+}
+
+solveWithOplist ⇐ {
+	+/ (⊂⍵) solveRow¨ io:read "part07.txt"
+}
+
+solve1 ⇐ {
+	solveWithOplist λ+ λ×
+}
+
+solve2 ⇐ {
+	solveWithOplist λ+ λ× λ{⍵+⍺×10*⌊1+10⍟⍵}
+}
