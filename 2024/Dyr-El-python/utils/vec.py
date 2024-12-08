@@ -34,7 +34,7 @@ class Vec2D:
         """Negates (mirrors in origo)"""
         return Vec2D(-self.x, -self.y)
 
-    def __rshift__(self, steps):
+    def __lshift__(self, steps):
         """Rotates 90 degrees around origo counter-clock wise"""
         steps %= 4
         x, y = self.as_tuple()
@@ -42,7 +42,7 @@ class Vec2D:
             x, y = (-y, x)
         return Vec2D(x, y)
 
-    def __lshift__(self, steps):
+    def __rshift__(self, steps):
         """Rotates 90 degrees around origo clock wise"""
         steps %= 4
         x, y = self.as_tuple()
@@ -56,7 +56,7 @@ class Vec2D:
     def __eq__(self, rhs):
         return self.x == rhs.x and self.y == rhs.y
 
-    def __neq__(self, rhs):
+    def __ne__(self, rhs):
         return self.x != rhs.x or self.y != rhs.y
 
     def __hash__(self):

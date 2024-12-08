@@ -30,6 +30,12 @@ class Grid2D:
         """Indexing support for grid, works with tuple or Vec2D"""
         return self.get(key)
 
+    def __contains__(self, key):
+        """Check if grid contains a key"""
+        if isinstance(key, Vec2D):
+            key = key.as_tuple()
+        return key in self.m_data
+
     def get(self, key: tuple | Vec2D, default: str = None):
         """Indexing with optional default"""
         if not isinstance(key, tuple):
@@ -40,13 +46,14 @@ class Grid2D:
 
     def items(self, filter=lambda ch, pos: True):
         """Iterates through all present positions, yielding pos, character pairs"""
+        print(f"items({self=}, filter=lambda ch, pos: True)")
         for pos, ch in self.m_data.items():
             if filter(ch, pos):
+                print(ch, pos)
                 yield Vec2D(pos[0], pos[1]), ch
-    
+
     def find(self, f):
         return [pos for pos, ch in self.items() if f(pos, ch)]
-
 
     def __str__(self):
         lines = []
@@ -54,5 +61,5 @@ class Grid2D:
             line = []
             for x in range(0, self.max_x + 1):
                 line.append(self[x, y])
-            lines.append(''.join(line))
-        return '\n'.join(lines)
+            lines.append("".join(line))
+        return "\n".join(lines)
