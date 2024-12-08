@@ -1,0 +1,9 @@
+solve1 ⇐ {
+	m ← ⊃io:read "part08.txt"
+	
+	solveType ⇐ {
+		{∧/(⍵≥0)∧(⍵<⍴m)}¨⍛/ (⊃(2×)⍛-/)¨ (≢/¨)⍛/ , ⍮⌻⍨ ⍸⍵=m
+	}
+
+	≢ ∪ ⊃ ,/ solveType¨ @. ~⍨ ∪,m
+}
