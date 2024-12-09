@@ -1,8 +1,7 @@
 from aoc_prepare import PrepareAoc
-from utils import parse_lines, Grid2D, Vec2D
-from itertools import product, combinations, count
+from utils import parse_lines, Grid2D
+from itertools import  combinations, count
 from functools import reduce
-import operator
 
 
 def part1(inp):
