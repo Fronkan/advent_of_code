@@ -1,0 +1,14 @@
+solve1 ⇐ {
+	data ← ↑io:read "part09.txt"
+⍝	data ← "2333133121414131402"
+	p ← {(2|⍵)%(⍵÷2) ¯1} ⍸ data-@0	
+
+	isComplete ⇐ { ∧/¯1=(⍵⍳¯1)↓⍵ }
+
+	while (~isComplete p) {
+		x ← ¯1 + (≢p) - (¯1≠⌽p) ⍳ 1
+		y ← p ⍳ ¯1
+		p ← ⌽⍢(x y⊇) p
+	}
+	+/ ×∘(⍳≢) (p⍳¯1)↑p
+}
