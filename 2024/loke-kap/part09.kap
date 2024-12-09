@@ -12,3 +12,23 @@ solve1 ⇐ {
 	}
 	+/ ×∘(⍳≢) (p⍳¯1)↑p
 }
+
+solve2 ⇐ {
+	data ← ↑io:read "part09.txt"
+⍝	data ← "2333133121414131402"
+
+	p ← {(2|⍵)%(⍵÷2) ¯1} ⍸ data-@0	
+
+	id ← ⌈/p
+	while (id≥0) {
+		g ← (1,2≠/p) ⊆ p
+		i ← id ⍳⍨ ↑¨g
+		f ← g.(i)
+		slotIndex ← 1 ⍳⍨ {(¯1=↑⍵)∧(≢f)≤(≢⍵)}¨ g
+		if ((slotIndex<≢g) ∧ (i>slotIndex)) {
+			p ← ⊃ ,/ {(f,((≢⊃g[slotIndex])-≢f)⍴¯1) ((≢f)⍴¯1)}⍢(slotIndex i⊇) g
+		}
+		id←id-1
+	}
+	+/ (p≠¯1) / ×∘(⍳≢) p
+}
