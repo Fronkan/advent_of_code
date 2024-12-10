@@ -52,3 +52,12 @@ class Vec2D:
 
     def __repr__(self):
         return f"Vec2D({self.x}, {self.y})"
+
+    def __eq__(self, rhs):
+        return self.x == rhs.x and self.y == rhs.y
+
+    def __ne__(self, rhs):
+        return self.x != rhs.x or self.y != rhs.y
+
+    def __hash__(self):
+        return hash(self.as_tuple())

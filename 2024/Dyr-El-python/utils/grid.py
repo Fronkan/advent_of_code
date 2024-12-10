@@ -24,11 +24,17 @@ class Grid2D:
     @property
     def max_y(self):
         """Largest y in the grid (not necessarily populated if filtering)"""
-        return self.max_y
+        return self.m_maxy
 
     def __getitem__(self, key: tuple | Vec2D):
         """Indexing support for grid, works with tuple or Vec2D"""
         return self.get(key)
+
+    def __contains__(self, key):
+        """Check if grid contains a key"""
+        if isinstance(key, Vec2D):
+            key = key.as_tuple()
+        return key in self.m_data
 
     def get(self, key: tuple | Vec2D, default: str = None):
         """Indexing with optional default"""
@@ -40,6 +46,28 @@ class Grid2D:
 
     def items(self, filter=lambda ch, pos: True):
         """Iterates through all present positions, yielding pos, character pairs"""
+        # print(f"items({self=}, filter=lambda ch, pos: True)")
         for pos, ch in self.m_data.items():
             if filter(ch, pos):
+                # print(ch, pos)
                 yield Vec2D(pos[0], pos[1]), ch
+
+    def find(self, f):
+        return [pos for pos, ch in self.items() if f(pos, ch)]
+
+    def __str__(self):
+        lines = []
+        for y in range(0, self.max_y + 1):
+            line = []
+            for x in range(0, self.max_x + 1):
+                line.append(self[x, y])
+            lines.append("".join(line))
+        return "\n".join(lines)
+
+    @staticmethod
+    def four_directions():
+        return (Vec2D(0, -1), Vec2D(1, 0), Vec2D(0, 1), Vec2D(-1, 0))
+
+    @staticmethod
+    def eight_directions():
+        return (Vec2D(0, -1), Vec2D(1, -1), Vec2D(1, 0), Vec2D(1, 1), Vec2D(0, 1), Vec2D(-1, 1), Vec2D(-1, 0), Vec2D(-1, -1))

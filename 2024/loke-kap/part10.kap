@@ -1,0 +1,23 @@
+∇ recurse (m ; pos ; n) {
+	v ← pos⌷m
+	(v≠n) → ⍬
+	(n=9) → ⊂pos
+	
+	dirs ← (¯1 0) (0 ¯1) (0 1) (1 0)
+	⊃,/{recurse (m ; ⍵ ; n+1)}¨ (dirs+⊂pos)
+}
+
+∇ loadMap (file) {
+	data ← ⊃ io:read file
+	¯1⌽¯1⊖(2+⍴data)↑ ¯1 int:proto data-@0
+}
+
+∇ solve1 {
+	m ← loadMap "part10.txt"
+	≢ ⊃ ,/ {∪ recurse  (m ; ⍵ ; 0)}¨ ,(⊂1 1)+⍳(⍴m)-2
+}
+
+∇ solve2 {
+	m ← loadMap "part10.txt"
+	≢ ⊃ ,/ {recurse  (m ; ⍵ ; 0)}¨ ,(⊂1 1)+⍳(⍴m)-2	
+}

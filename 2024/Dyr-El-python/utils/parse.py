@@ -1,13 +1,14 @@
 import re
+import pprint
 
 
-def parse_lines(inp: str, functions: list[callable], split_groups: str=None):
+def parse_lines(inp: str, functions: list[callable], split_groups: str = None):
     """Parses line based input strings
 
     inp: the input string
 
     functions: a function to apply to each line in the case of split groups a sequence of functions for every group
-    
+
     split_groups: if not none a delimiter to separate groups of ingut
 
     Returns: A list of the modified lines or a list of list of modified lines in the case of split groups.
