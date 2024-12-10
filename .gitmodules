@@ -28,3 +28,6 @@
 [submodule "2024/ingo-rust"]
 	path = 2024/ingo-rust
 	url = https://github.com/ingomancer/AoC2024
+[submodule "2024/ygge-java"]
+	path = 2024/ygge-java
+	url = git@github.com:ygge/adventofcode2024.git
