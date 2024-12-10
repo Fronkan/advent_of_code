@@ -46,10 +46,10 @@ class Grid2D:
 
     def items(self, filter=lambda ch, pos: True):
         """Iterates through all present positions, yielding pos, character pairs"""
-        print(f"items({self=}, filter=lambda ch, pos: True)")
+        # print(f"items({self=}, filter=lambda ch, pos: True)")
         for pos, ch in self.m_data.items():
             if filter(ch, pos):
-                print(ch, pos)
+                # print(ch, pos)
                 yield Vec2D(pos[0], pos[1]), ch
 
     def find(self, f):
@@ -63,3 +63,11 @@ class Grid2D:
                 line.append(self[x, y])
             lines.append("".join(line))
         return "\n".join(lines)
+
+    @staticmethod
+    def four_directions():
+        return (Vec2D(0, -1), Vec2D(1, 0), Vec2D(0, 1), Vec2D(-1, 0))
+
+    @staticmethod
+    def eight_directions():
+        return (Vec2D(0, -1), Vec2D(1, -1), Vec2D(1, 0), Vec2D(1, 1), Vec2D(0, 1), Vec2D(-1, 1), Vec2D(-1, 0), Vec2D(-1, -1))
