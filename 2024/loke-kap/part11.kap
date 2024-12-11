@@ -1,0 +1,22 @@
+solveIterations ⇐ {
+	group ⇐ {
+		(⊃ +∘(0 1×)/)¨ (1,2≠⍥↑/)⍛⊆ (⍋↑¨)⍛⊇ ⍵
+	}
+
+	transform ⇐ {
+		(v n) ← ⍵
+		when {
+			(v=0)     {⍮1 n}
+			(0=2|≢⍕v) {({⊂ (⍎,⍵) n}⍤1) 2 ¯1⍴⍕v}
+			(1)       {⍮(2024 × v) n}
+		}
+	}
+
+	n ← group {(⍎⍵) 1}¨ (@\s≠)⍛⊂ ↑io:read "part11.txt"
+
+	+/ (↑↓)¨ ((group ⊃,/ transform¨)⍣⍵) n
+}
+
+solve1 ⇐ {
+	solveIterations 75
+}
