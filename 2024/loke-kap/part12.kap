@@ -1,0 +1,29 @@
+solve1 ⇐ {
+	m ← ¯1⌽¯1⊖ (2+⍴)⍛↑ ⊃ io:read "part12.txt"
+	dirs ← (¯1 0) (0 ¯1) (0 1) (1 0)
+
+	recurse ⇐ { throw "Forward declaration" }
+	recurse ⇐ {
+		(state; pos) ← ⍵
+		ch ← pos⌷m
+		near ← (ch = dirPos⊇m) / dirPos←(dirs+⊂pos)
+		state ← {1}⍢((⊂pos)⊇) state
+		{
+			state ← recurse⟦state; ⍵⟧
+		}¨ (0 = near ⌷¨ ⊂state) / near
+		state
+	}
+
+	found ← (⍴m)⍴0
+	groups ← ⊃,/, {
+		if (~⊃⍵⌷found) {
+			res ← recurse⟦(⍴m)⍴0; ⍵⟧
+			found ← {1}⍢((⍸res)⊇) found
+			⊂res
+		} else {
+			⍬
+		}
+	}¨ 1+⍳(⍴m)-2
+
+	+/ { (+/,1=⍵) × +/, ⍵ × 4 - ⊃+/ (¯1 1 ⌽¨ ⊂⍵) , (¯1 1 ⊖¨ ⊂⍵)}¨ groups
+}
