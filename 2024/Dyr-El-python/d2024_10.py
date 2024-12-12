@@ -10,40 +10,40 @@ def parse(inp: str):
 
 def part1(inp):
     grid = parse(inp)
-    remaining = deque(grid.find(lambda pos, ch: ch=='0'))
-    leads = {pos:{pos} for pos in remaining}
-    correct_order = {c1:c2 for c1, c2 in zip('012345678', '123456789')}
+    remaining = deque(grid.find(lambda pos, ch: ch == "0"))
+    leads = {pos: {pos} for pos in remaining}
+    correct_order = {c1: c2 for c1, c2 in zip("012345678", "123456789")}
     while remaining:
         pos = remaining.popleft()
         for step in Grid2D.four_directions():
             next_pos = pos + step
             if next_pos not in grid:
                 continue
-            if correct_order.get(grid[pos], '') != grid[next_pos]:
+            if correct_order.get(grid[pos], "") != grid[next_pos]:
                 continue
             leads[next_pos] = leads.get(next_pos, set()) | leads[pos]
             remaining.append(next_pos)
-    ends = grid.find(lambda _, ch: ch=='9')
+    ends = grid.find(lambda _, ch: ch == "9")
     return sum((len(leads[end]) for end in ends))
 
 
 def part2(inp):
     grid = parse(inp)
-    remaining = deque(grid.find(lambda pos, ch: ch=='0'))
-    paths_to = {pos:{(pos,)} for pos in remaining}
-    correct_order = {c1:c2 for c1, c2 in zip('012345678', '123456789')}
+    remaining = deque(grid.find(lambda pos, ch: ch == "0"))
+    paths_to = {pos: {(pos,)} for pos in remaining}
+    correct_order = {c1: c2 for c1, c2 in zip("012345678", "123456789")}
     while remaining:
         pos = remaining.popleft()
         for step in Grid2D.four_directions():
             next_pos = pos + step
             if next_pos not in grid:
                 continue
-            if correct_order.get(grid[pos], '') != grid[next_pos]:
+            if correct_order.get(grid[pos], "") != grid[next_pos]:
                 continue
-            new_paths = {x + (next_pos, ) for x in paths_to[pos]}
+            new_paths = {x + (next_pos,) for x in paths_to[pos]}
             paths_to[next_pos] = paths_to.get(next_pos, set()) | new_paths
             remaining.append(next_pos)
-    ends = list(grid.find(lambda _, ch: ch=='9'))
+    ends = list(grid.find(lambda _, ch: ch == "9"))
     return sum((len(paths_to[end]) for end in ends))
 
 
