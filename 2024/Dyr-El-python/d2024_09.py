@@ -3,11 +3,11 @@ from utils import parse_lines, Grid2D, Vec2D
 from collections import namedtuple, deque
 
 
-FileItem = namedtuple("FileItem", ['id', 'position', 'length'])
-SpaceItem = namedtuple("SpaceItem", ['position', 'length'])
+FileItem = namedtuple("FileItem", ["id", "position", "length"])
+SpaceItem = namedtuple("SpaceItem", ["position", "length"])
 
 
-def parse(inp: str)-> tuple[deque[FileItem], deque[SpaceItem]]:
+def parse(inp: str) -> tuple[deque[FileItem], deque[SpaceItem]]:
     files = deque()
     space = deque()
     pos = 0
@@ -33,19 +33,21 @@ def part1(inp: str):
     total = 0
     while files:
         while files[0].length > 0:
-            total += (tick_block(files, 0) * block_position)
+            total += tick_block(files, 0) * block_position
             block_position += 1
         files.popleft()
         if not files:
             return total
         while spaces[0].length != 0:
             if files[-1].length > 0:
-                total += (tick_block(files, -1) * block_position)
+                total += tick_block(files, -1) * block_position
                 block_position += 1
             else:
                 files.pop()
                 continue
-            spaces[0] = SpaceItem(position=spaces[0].position, length=(spaces[0].length - 1))
+            spaces[0] = SpaceItem(
+                position=spaces[0].position, length=(spaces[0].length - 1)
+            )
         spaces.popleft()
     return block_position
 
@@ -67,10 +69,11 @@ def part2(inp):
         for block_idx in range(new_position, new_position + file.length):
             blocks[block_idx] = file.id
         if space_to_use is not None:
-            spaces[space_to_use] = SpaceItem(position=(spaces[space_to_use].position + file.length), 
-                                            length=spaces[space_to_use].length - file.length)
+            spaces[space_to_use] = SpaceItem(
+                position=(spaces[space_to_use].position + file.length),
+                length=spaces[space_to_use].length - file.length,
+            )
     return sum((block_position * file_id for block_position, file_id in blocks.items()))
-
 
 
 ex_inp = """2333133121414131402""".strip()

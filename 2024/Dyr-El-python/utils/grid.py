@@ -1,4 +1,5 @@
 from utils.vec import Vec2D
+from collections import deque
 
 
 class Grid2D:
@@ -64,10 +65,36 @@ class Grid2D:
             lines.append("".join(line))
         return "\n".join(lines)
 
+    def find_region(self, pos, directions=None):
+        if directions is None:
+            directions = self.four_directions()
+        ch = self[pos]
+        rem = deque([pos])
+        region = {pos}
+        while rem:
+            p = rem.popleft()
+            for dir in directions:
+                neighbour = p + dir
+                if neighbour in region:
+                    continue
+                if self.get(neighbour, " ") == ch:
+                    region.add(neighbour)
+                    rem.append(neighbour)
+        return region
+
     @staticmethod
     def four_directions():
         return (Vec2D(0, -1), Vec2D(1, 0), Vec2D(0, 1), Vec2D(-1, 0))
 
     @staticmethod
     def eight_directions():
-        return (Vec2D(0, -1), Vec2D(1, -1), Vec2D(1, 0), Vec2D(1, 1), Vec2D(0, 1), Vec2D(-1, 1), Vec2D(-1, 0), Vec2D(-1, -1))
+        return (
+            Vec2D(0, -1),
+            Vec2D(1, -1),
+            Vec2D(1, 0),
+            Vec2D(1, 1),
+            Vec2D(0, 1),
+            Vec2D(-1, 1),
+            Vec2D(-1, 0),
+            Vec2D(-1, -1),
+        )
