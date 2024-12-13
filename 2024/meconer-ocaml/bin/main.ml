@@ -19,5 +19,7 @@ Printf.printf "Day9 part 1 : %d\n" ( Day9.resultP1);
 Printf.printf "Day9 part 2 : %d\n" ( Day9.resultP2); *)
 (* Printf.printf "Day10 part 1 : %d\n" ( Day10.resultP1);
 Printf.printf "Day10 part 2 : %d\n" ( Day10.resultP2); *)
-Printf.printf "Day11 part 1 : %d\n" ( Day11.resultP1);
-Printf.printf "Day11 part 2 : %d\n" ( Day11.resultP2);
+(* Printf.printf "Day11 part 1 : %d\n" ( Day11.resultP1);
+Printf.printf "Day11 part 2 : %d\n" ( Day11.resultP2); *)
+Printf.printf "Day12 part 1 : %d\n" ( Day12.resultP1);
+Printf.printf "Day12 part 2 : %d\n" ( Day12.resultP2);
