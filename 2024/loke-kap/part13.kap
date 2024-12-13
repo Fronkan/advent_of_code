@@ -1,0 +1,24 @@
+load ⇐ {
+	"Button A: X\\+([0-9]+), Y\\+([0-9]+);Button B: X\\+([0-9]+), Y\\+([0-9]+);Prize: X=([0-9]+), Y=([0-9]+)" regex:findall ⊃,/↓,@;, ⍪ io:read "part13.txt"
+}
+
+solvePrize ⇐ {
+	(xa ya xb yb x y) ← ⍎¨↓⍵
+	(x y) ← ⍺ + x y
+	a ← ((yb×x)-(xb×y))÷((xa×yb)-(ya×xb))
+	b ← ((ya×x)-(xa×y))÷((ya×xb)-(xa×yb))
+	if (∧/ ⌊⍛= a b) {
+		b+a×3
+	} else {
+		0
+	}
+}
+
+
+solve1 ⇐ {
+	+/ 0 solvePrize¨ load 0
+}
+
+solve2 ⇐ {
+	+/ 10000000000000 solvePrize¨ load 0
+}
