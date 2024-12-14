@@ -1,0 +1,29 @@
+load ⇐ {
+	⍉¨ (2↑)«⍮»(¯2↑) ⍉ ⊃ {⍎¨ ↓ "^p=(-?\\d+),(-?\\d+) v=(-?\\d+),(-?\\d+)$" regex:finderror ⍵}¨ io:read "part14.txt"
+}
+
+solve1 ⇐ {
+	(coords d) ← load 0
+	size ← 101 103
+	n ← 100
+	pos ← size |[1] coords + n×d
+	notInCentre ← (∧/ pos ≠[1] (size-1)÷2) ⌿ pos
+	×/ ⍸˝ ∧ +/ 1 2 ×[1] ⌊ notInCentre ÷[1] size÷2
+}
+
+solve2 ⇐ {
+	size ← 101 103
+
+	(coords d) ← load 0
+	res ← {
+		a ← ⍉ 0 ≠ ⍸˝ ∧ ⊂[1] size |[1] coords + ⍵×d
+		if (∨/ , (5 5 ⍴ 1) ⍷ a) {
+			io:println "Iteration: " ⍵
+			io:print a ⊇ ".*"
+			,⍵
+		} else {
+			⍬
+		}
+	}¨ ⍳10000
+	io:println "Solution found, iteration: " (↑⊃,/res)
+}
