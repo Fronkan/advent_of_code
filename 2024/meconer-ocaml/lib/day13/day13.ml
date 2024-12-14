@@ -117,6 +117,7 @@ let findN1AndN2 clawMachine =
   let n1 = (px -. n2 *. bx) /. ax in
   n1,n2
 
+
 let tryMachine clawMachine n1 n2 =
   let n1i = int_of_float (Float.round_nearest n1) in
   let n2i = int_of_float (Float.round_nearest n2) in
@@ -127,6 +128,7 @@ let tryMachine clawMachine n1 n2 =
   let bx = clawMachine.btnB.x in
   let by = clawMachine.btnB.y in
   ( n1i * ax + n2i * bx = px ) && ( n1i * ay + n2i * by = py )
+
 
 let testClawMachineP2 clawMachine =
   let n1,n2 = findN1AndN2 clawMachine in
