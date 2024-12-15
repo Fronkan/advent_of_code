@@ -31,6 +31,12 @@ class Grid2D:
         """Indexing support for grid, works with tuple or Vec2D"""
         return self.get(key)
 
+    def __setitem__(self, key: tuple | Vec2D, ch: str):
+        """Indexing support for grid, works with tuple or Vec2D"""
+        if isinstance(key, Vec2D):
+            key = key.as_tuple()
+        self.m_data[key] = ch
+
     def __contains__(self, key):
         """Check if grid contains a key"""
         if isinstance(key, Vec2D):

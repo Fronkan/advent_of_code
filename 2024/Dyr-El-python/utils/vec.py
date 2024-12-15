@@ -61,3 +61,7 @@ class Vec2D:
 
     def __hash__(self):
         return hash(self.as_tuple())
+
+    def clamp(self, minx, miny, maxx, maxy):
+        return Vec2D((self.x - minx) % (maxx - minx + 1) + minx,
+                     (self.y - miny) % (maxy - miny + 1) + miny)
