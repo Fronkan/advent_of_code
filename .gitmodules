@@ -31,3 +31,6 @@
 [submodule "2024/ygge-java"]
 	path = 2024/ygge-java
 	url = git@github.com:ygge/adventofcode2024.git
+[submodule "2024/f00ale-cpp"]
+	path = 2024/f00ale-cpp
+	url = https://github.com/f00ale/advent-of-code.git
