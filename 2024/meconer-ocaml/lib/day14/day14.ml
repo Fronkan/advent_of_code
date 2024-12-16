@@ -187,6 +187,5 @@ let doCycles start cycleLength robots =
   let robots = doNMoves start robots in
   loop start robots
 
-let _ = doCycles start cycleLength robots
+let resultP2 = doCycles start cycleLength robots
 
-let resultP2 = 0
