@@ -1,0 +1,52 @@
+solve1 ⇐ {
+	m ← ⊃ io:read "part16.txt"
+	⍝ Compute start and end positions
+	(start end) ← @S @E ⍳⍨ m
+
+	⍝ Create array of visited positions, including the cost. This array is 3-dimensional
+	⍝ where the major axis indicates the direction of travel. We fill it with the value
+	⍝ 2⋆62 since we don't have an integer infinity value.
+	⍝ We also initialise the starting position to 0.
+	costs ← {0}⍢(((⍳4),¨⊂start)⊇) (4,⍴m) ⍴ 2⋆62
+
+	bestSolution ← 2⋆62
+
+	dirs ← (0 1) (¯1 0) (0 ¯1) (1 0)
+
+	fd ← :output io2:open "log.txt"
+	recurse ⇐ { throw "Forward declaration" }
+	recurse ⇐ {
+		(pos; dir; cost) ← ⍵
+		{
+			newPos ← dirs.(⍵)+pos
+			v ← newPos⌷m
+			⍝ If we hit a wall, just return
+			(v=@#) → 0
+			⍝ Compute the cost to reach this position
+			newCost ← cost + 1 + 1000×dir≠⍵
+			⍝ Compute the previous cost
+			i ← ⍵ (4|⍵+2),¨⊂newPos
+			prevCost ← ⌊/i⊇costs
+			if (prevCost > newCost) {
+				⍝ Update the costs array
+				costs ← {newCost}⍢(i⊇) costs
+				⍝ If we're not at the end, recurse
+				v ← newPos⌷m
+				if (@# ≠ v and newCost < bestSolution) {
+⍝					C ← {2}⍢((⊂newPos)⊇) (⍴m)⍴0
+⍝					fd io2:write¨ {⍵,@\n}¨ ⊂[0] "∙⌸○=×y"[C + (@#=m) + 2×(2⋆62)≠⌊⌿ costs] ⋄ fd io2:write "\n"
+					if (@E = v) {
+						bestSolution ← bestSolution⌊newCost
+					} else {
+						recurse⟦newPos; ⍵; newCost⟧
+					}
+				}
+			}
+		}¨ (⍳4)~4|dir+2
+	}
+
+	recurse⟦start; 0; 0⟧
+	close fd
+
+	((⊂⍳4),end) ⌷ costs
+}
