@@ -1,0 +1,65 @@
+td ← "Register A: 729" `
+     "Register B: 0" `
+     "Register C: 0" `
+     "" `
+     "Program: 0,1,5,4,3,0"
+
+⍝ This is a small function that disassembles a program
+disassemble ⇐ {
+	io:println o3:format ⍵
+	ops ← "0123abcx"
+	instrNames ← `
+		λ{"divide a ← a ÷ 2⋆" ops[⍵]} `
+		λ{"xor b +∵ " ⍵} `
+		λ{"transfer b ← 8|" ops[⍵]} `
+		λ{"jc a≠0 → " ⍵} `
+		λ{"transfer b ← b +∵ c"} `
+		λ{"out 8|" ops[⍵]} `
+		λ{"divide b ← a ÷ 2⋆" ops[⍵]} `
+		λ{"divide c ← a ÷ 2⋆" ops[⍵]}
+	{(2×⍳≢⍵),⍵} :fill 2 ⍴ 2 {∊⍕¨⍞(instrNames[⍺]) ⍵}/ ⍵
+}
+
+parseInput ⇐ {
+	filtered ← ⊃ ,/ , (⍪⍵),@\s
+	p ← ↓ "Register A: (\\d+).*Register B: (\\d+).*Register C: (\\d+).*Program: ([0-9,]+)" regex:finderror filtered
+	(⍎¨ ¯1↓p) (⍎¨ (@,≠)⍛⊂ ∊¯1↑p)
+}
+
+⍝ The execution state is an array with the following fields:
+⍝   PC, register list, code, iteration count, output
+⍝ This function evaluates one instruction and returns the new state
+evalInstr ⇐ {
+	(pc (a b c) code i output) ← ⍵
+
+	comboOps ← λ{0} λ{1} λ{2} λ{3} λ{a} λ{b} λ{c} λ{error "Illegal op"}
+	evalCombo ⇐ {⍞(comboOps[⍵]) 0}
+
+	instructions ← `
+		λ{a ← (-evalCombo ⍵) ⌽∵ a} `
+		λ{b ← b +∵ ⍵} `
+		λ{b ← 7 ∧∵ evalCombo ⍵} `
+		λ{a ≠ 0 and pc ← ⍵-2} `
+		λ{b ← b +∵ c} `
+		λ{output ← output , 7 ∧∵ evalCombo ⍵} `
+		λ{b ← (-evalCombo ⍵) ⌽∵ a} `
+		λ{c ← (-evalCombo ⍵) ⌽∵ a}
+
+	(instr arg) ← code[pc + 0 1]
+	⍞(instructions[instr]) arg
+	(pc+2) (a b c) code (i+1) output
+}
+
+evalProgram ⇐ {
+	(startRegs code) ← ⍵
+	⍝ Evaluate one instruction at a time until the pc is out of range
+	(evalInstr⍣{pc←↑⍺ ⋄ pc<0 or pc≥(≢code)-1}) 0 startRegs code 0 ⍬
+}
+
+solve1 ⇐ {
+	input ← io:read "part17.txt"
+	state ← evalProgram parseInput input
+
+	⍝ Print the output in the form required by problem statement
+	io:println ⊃ ,/ ↓, @,,⍪ ⍕¨ state.(4)
+}
