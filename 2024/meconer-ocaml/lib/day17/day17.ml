@@ -278,8 +278,6 @@ Program line is 2,4,1,5,7,5,1,6,4,1,5,5,0,3,3,0
 100032 : 11 000 011 011 000 000 -> [5;5;0;3;3;0]
 800294 : 11 000 011 011 000 100 110 -> [1;5;5;0;3;3;0]
  *)
-let listToMatch = [2;4;1;5;7;5;1;6;4;1;5;5;0;3;3;0]
-
 
 let findAnswer start listToMatch =
   let revList = List.rev listToMatch in
@@ -296,4 +294,4 @@ let findAnswer start listToMatch =
   loop 1 start 
 
 
-let resultP2 = findAnswer 0 listToMatch
+let resultP2 = findAnswer 0 programAsList

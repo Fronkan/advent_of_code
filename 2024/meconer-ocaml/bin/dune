@@ -2,6 +2,7 @@
  (public_name aoc2024)
  (name main)
  (libraries
+  utils
   day1
   day2
   day3
@@ -20,4 +21,6 @@
   day15p2
   day16
   day16p2
-  day17))
+  day17
+  day18
+  day19))
