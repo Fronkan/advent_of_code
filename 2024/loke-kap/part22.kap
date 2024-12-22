@@ -1,0 +1,42 @@
+⍝ The implementation of this function is intentionally written in
+⍝ a very verbose manner in order to make it easy to understand.
+⍝
+⍝ The 'computeSimple' function performs one iteration of the
+⍝ secret number computation.
+computeSimple ⇐ {
+	⍝ Define a local function implementing the 'prune' operation.
+	⍝ This is just taking the argument mod 16777216.
+	p ⇐ 16777216|
+
+	⍝ Call p on the result of ⍵ xor ⍵×64. Then assign the result to s.
+	s ← p ⍵ +∵ ⍵×64
+
+	⍝ Call p on the result of s xor s÷32 (rounded down) and assign the result to s.
+	⍝ There is actually no need to call prune since the result is never going to
+	⍝ have a larger bit-width than the input.
+	s ← s +∵ ⌊s÷32
+
+	⍝ Finally, call p on the result of s xor s×2048, and return the result.
+	p s +∵ s×2048
+}
+
+solve1 ⇐ {
+	⍝ Read all rows from the file and convert each value to an integer.
+	data ← ⍎¨ io:read "part22.txt"
+
+	⍝ Iteratively call computeSimple 2000 times on the entire dataset
+	⍝ and sum the result.
+	+/ (computeSimple⍣2000) data
+}
+
+solve2 ⇐ {
+	data ← ⍎¨ io:read "part22.txt"
+	prices ← 10| {computeSimple ⍺}\ ⍉ 2001 (≢data) ⍴ data
+	changes ← 0,2-⍨/prices
+
+	checkPattern ⇐ {
+		+/ prices ({(3+1⍳⍨⍵) ⊇ ⍺,4⍴0}⍤1) ⍵ ⍷ changes
+	}
+
+	⌈/ checkPattern¨ ⊂[0] ((4⍴19)⊤⍳19⋆4) ⊇ (⍳19)-9
+}
