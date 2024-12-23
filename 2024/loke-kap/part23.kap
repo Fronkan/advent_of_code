@@ -20,13 +20,14 @@
 computeGroups ⇐ {
 	m ← map ⍬
 	{ (a b)←⍵ ⋄ m←m mapAppend a b b a }¨ (@-≠)⍛⊂¨ io:read "part23.txt"
-	g ← bronKerbosch⟦mapKeys m; m⟧
-
-	g ← (3≤≢)¨⍛/ g
+	bronKerbosch⟦mapKeys m; m⟧
 }
 
 solve1 ⇐ {
 	g ← computeGroups 0
+
+	⍝ Remove all groups with less than 3 elements
+	g ← (3≤≢)¨⍛/ g
 
 	⍝ Groups with more than 3 elements needs to be split up into all possible permutations
 	⍝ of three elements.
@@ -38,8 +39,8 @@ solve1 ⇐ {
 }
 
 solve2 ⇐ {
-	g ← computeGroups 0
-	⊃,/ ↓,@,,⍪ ∧ ⊃g ⊇⍨ ↑⍒ ≢¨ g
+        g ← computeGroups 0
+        ⊃,/ ↓,@,,⍪ ∧ ⊃g ⊇⍨ ↑⍒ ≢¨ g
 ⍝       ↑↑↑ ↑↑↑↑↑↑ ↑ ↑↑↑↑↑ ↑↑ ↑↑ 
 ⍝        │    │    │ │ │   │  └─ For each element in g, return the length
 ⍝        │    │    │ │ │   └──── Find the index of the largest value 
