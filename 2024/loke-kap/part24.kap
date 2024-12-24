@@ -11,7 +11,7 @@ solve1 ⇐ {
 	unassigned ← (mapKeys connections) ~ (mapKeys states)
 
 	iterate ⇐ {
-		∨/ {
+		res ← {
 			(a b op) ← connections.(⍵)
 			s ← states[a b]
 			(∨/null≡¨s) → 0
@@ -19,6 +19,7 @@ solve1 ⇐ {
 			unassigned ← unassigned ~ ⍵
 			1
 		}¨ unassigned
+		∨/res
 	}
 
 	(iterate⍣(0=⊣)) 0
