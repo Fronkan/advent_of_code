@@ -1,0 +1,10 @@
+solve1 ⇐ {
+	defs ← @# = ⊃¨ ((⊂⍬)≢¨)⍛⊂ io:read "part25.txt"
+
+	parse ⇐ ({1⍳⍨⍵}⍤1)⍉
+
+	locks ← parse¨ ~ ↑¨⍛/ defs
+	keys ← parse¨ (~↑¨)⍛/ defs
+
+	+/, locks (∧/≤)⌻ keys
+}
