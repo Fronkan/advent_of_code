@@ -1,0 +1,29 @@
+solve1 ⇐ {
+	(s c) ← ((⊂⍬)≢¨)⍛⊂ io:read "part24.txt"
+	states ← map ⊃ {(n v) ← ↓"^([a-z][a-z0-9]*): (\\d+)$" regex:finderror ⍵ ⋄ ("adv" int:intern n) (⍎v)}¨ s
+
+	fns ← map "AND" λ∧ "OR" λ∨ "XOR" λ≠
+	connections ← map ⊃ {
+		(a op b c) ← ↓"^([a-z][a-z0-9]*) (AND|OR|XOR) ([a-z][a-z0-9]*) -> ([a-z][a-z0-9]*)$" regex:finderror ⍵
+		("adv" int:intern c) ((("adv" int:intern)¨ a b) , fns.(op))
+	}¨ c
+
+	unassigned ← (mapKeys connections) ~ (mapKeys states)
+
+	iterate ⇐ {
+		res ← {
+			(a b op) ← connections.(⍵)
+			s ← states[a b]
+			(∨/null≡¨s) → 0
+			states ← states mapPut ⍵ (⍞op/s)
+			unassigned ← unassigned ~ ⍵
+			1
+		}¨ unassigned
+		∨/res
+	}
+
+	(iterate⍣(0=⊣)) 0
+	(n v) ← ⊂[0] ∨(↑int:symbolName)¨⍢(0 ¯1↓) mapToArray states
+	2 ⊥ ((@z=↑)¨ n) / v
+	
+}

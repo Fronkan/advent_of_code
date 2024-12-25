@@ -1,0 +1,52 @@
+∇ bronKerbosch (potential; m) {
+	recurse ⇐ { throw "Forward declaration" }
+	recurse ⇐ {
+		(r; p; x) ← ⍵
+		if (0=≢p and 0=≢x) {
+			⊂r
+		} else {
+			⊃ ,/ {
+				n ← m.(⍵)
+				res ← recurse⟦r∪⊂⍵; p∩n; x∩n⟧
+				p ← p ~ ⊂⍵
+				x ← x ∪ ⊂⍵
+				res
+			}¨ p
+		}
+	}
+	recurse⟦⍬; potential; ⍬⟧
+}
+
+computeGroups ⇐ {
+	m ← map ⍬
+	{ (a b)←⍵ ⋄ m←m mapAppend a b b a }¨ (@-≠)⍛⊂¨ io:read "part23.txt"
+	bronKerbosch⟦mapKeys m; m⟧
+}
+
+solve1 ⇐ {
+	g ← computeGroups 0
+
+	⍝ Remove all groups with less than 3 elements
+	g ← (3≤≢)¨⍛/ g
+
+	⍝ Groups with more than 3 elements needs to be split up into all possible permutations
+	⍝ of three elements.
+	g ← ∪ ⊃ ,/ { ∧¨ (∪ ∧¨ ⍸ (3=≢)¨ ∪¨ ⍳3⍴≢⍵) ⊇¨ ⊂⍵ }¨ g
+
+	⍝ Filter out all groups where at least one name starts with t and
+	⍝ count the number of results
+	+/ {@t∊↑¨⍵}¨ g
+}
+
+solve2 ⇐ {
+        g ← computeGroups 0
+        ⊃,/ ↓,@,,⍪ ∧ ⊃g ⊇⍨ ↑⍒ ≢¨ g
+⍝       ↑↑↑ ↑↑↑↑↑↑ ↑ ↑↑↑↑↑ ↑↑ ↑↑ 
+⍝        │    │    │ │ │   │  └─ For each element in g, return the length
+⍝        │    │    │ │ │   └──── Find the index of the largest value 
+⍝        │    │    │ │ └──────── Get the value with that index (the largest list)
+⍝        │    │    │ └────────── Disclose the result
+⍝        │    │    └──────────── Sort the elements in the array
+⍝        │    └───────────────── Add a comme between each element
+⍝        └────────────────────── Concatenate all elements and disclose
+}
