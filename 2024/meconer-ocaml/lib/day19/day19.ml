@@ -69,9 +69,10 @@ let countPossibleCombos towels wantedPattern =
   let rec tryLoop count patternSoFar restOfStr =
     (* Printf.printf "%d %s %s\n" count patternSoFar restOfStr; *)
     match Map.find !memo restOfStr with
-    | Some n -> n
+    | Some n -> n (* Found in memo *)
     | None ->
         if String.equal wantedPattern patternSoFar then 1
+          (* Ready. We found 1 possible combo *)
         else
           let possibleTowelsForRest =
             getTowelsForStartOfPattern restOfStr towels

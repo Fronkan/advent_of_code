@@ -125,6 +125,16 @@ let printRevPath width height prev corrupteds =
 let manhattanDist pos1 pos2 =
   abs (pos1.col - pos2.col) + abs (pos1.row - pos2.row)
 
+let straightDist pos1 pos2 =
+  let p1c = float_of_int pos1.col in
+  let p1r = float_of_int pos1.row in
+  let p2c = float_of_int pos2.col in
+  let p2r = float_of_int pos2.row in
+  let dist =
+    sqrt (((p1c -. p2c) *. (p1c -. p2c)) +. ((p1r -. p2r) *. (p1r -. p2r)))
+  in
+  int_of_float (Float.round_nearest dist)
+
 let isOnTarget pos targetPos =
   pos.col = targetPos.col && pos.row = targetPos.row
 
@@ -293,7 +303,7 @@ let bfsDist =
 let aStarDist =
   aStar { col = 0; row = 0 }
     { col = width - 1; row = width - 1 }
-    corrupteds manhattanDist
+    corrupteds straightDist
 
 let resultP1 = Option.value_exn bfsDist
 

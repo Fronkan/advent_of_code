@@ -28,6 +28,10 @@ let string_of_dir dir =
 let isOnGrid ~width ~height coord =
   coord.col >= 0 && coord.col < width && coord.row >= 0 && coord.row < height
 
+let is_on_grid grid coord =
+  coord.col >= 0 && coord.col < grid.width && coord.row >= 0
+  && coord.row < grid.height
+
 (* Code for a priority queue sorted by cmp *)
 
 (* Insert an element while maintaining sorted order *)
