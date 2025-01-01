@@ -1,0 +1,172 @@
+Full adder 
+SUM = A XOR B XOR Cin
+Cout = (A AND B) OR ((A XOR B) AND Cin)
+
+
+
+Z00 = X00 xor y00 (No Cin)
+  Cout = jfs = x00 AND y00
+
+Z01 = X01 xor Y01 xor jfs
+      wsb = (X01 XOR Y01)
+  Cout = vqv OR (wsb AND jfs) -> vqv OR dqt -> rqf
+      vqv = (X01 AND Y01)
+
+z02 = rjt xor rqf
+    rjt = Y02 xor X02 
+    rqf = Cin
+  Cout = qff OR (rjt AND rqf) -> qff OR bcj -> jwm
+    qff = Y02 AND X02
+
+z03 = nbr xor jwm
+    nbr = X03 XOR y03
+    jwm = Cin
+  Cout = qvr OR (nbr AND jwm) -> qvr OR pbb -> gkm
+    qvr = Y03 AND X03
+
+z04 = mvk xor gkm
+    mvk = X04 XOR y04
+    gkm = Cin
+  Cout = kdq OR (mvk AND gkm) -> kdq OR hbc -> jdq
+    kdq = Y04 AND X04
+
+z05 = gqw xor jdq
+    gqw = X05 XOR y05
+    jdq = Cin
+  Cout = krf OR (gqw AND jdq) -> krf OR qbq -> jbb
+    krf = Y05 AND X05
+
+z06 = jbb XOR pgb
+    pgb <= x06 XOR y06
+    jbb = Cin
+  Cout = ndm OR (pgb AND jbb) -> ndm OR kth -> qdp
+    ndm = X06 AND y06
+
+z07 = qdp XOR kcs
+    kcs = X07 XOR y07
+    qdp = Cin
+  Cout = vcn OR (kcs AND qdp) -> vcn OR bnf -> kbg
+    vcn = Y07 AND X07
+
+z08 = qht XOR kbg
+    qht = X08 XOR y08
+  Cin  = kbg
+    jnq = Y08 AND X08
+  Cout = jnq OR (qht AND kbg) -> jnq OR qtk -> wwg
+
+z09 = bbp XOR wwg
+    bbp = X09 XOR y09
+  Cin  = wwg
+    rbr = Y09 AND X09
+  Cout = rbr OR (bbp AND wwg) -> rbr OR hnd -> kmf
+
+z10 = mss XOR kmf
+    mss = X10 XOR y10
+  Cin  = kmf
+    ksw = Y10 AND X10
+  Cout = ksw OR (mss AND kmf) -> ksw OR hhm -> cpj
+
+z11 = rcr XOR cpj
+    rcr = X11 XOR y11
+  Cin  = cpj
+    jsd = Y11 AND X11
+  Cout = jsd OR (rcr AND cpj) -> jsd OR kpc -> chv
+
+z12 = dpg XOR chv
+    dpg = X12 XOR y12
+  Cin  = chv
+    bbc = Y12 AND X12
+  Cout = bbc OR (dpg AND chv) -> bbc OR nfw -> wkc
+
+z13 = jdm XOR wkc
+    jdm = X13 XOR y13
+  Cin  = wkc
+    bhn = Y13 AND X13
+  Cout = bhn OR (jdm AND wkc) -> bhn OR nrm -> qjr
+
+z14 = bns XOR qjr
+    bns = X14 XOR y14
+  Cin  = qjr
+    fqv = Y14 AND X14
+  Cout = fqv OR (bns AND qjr) -> fqv OR tgq -> cqk
+
+z15 = hns XOR cqk
+    hns = X15 XOR y15
+  Cin  = cqk
+    twn = Y15 AND X15
+  Cout = twn OR (hns AND cqk) -> twn OR tkb -> jkw
+
+z16 = mqf XOR jkw
+    mqf = X16 XOR y16
+  Cin  = jkw
+    pwk = Y16 AND X16
+  Cout = pwk OR (mqf AND jkw) -> pwk OR ncj -> tdv
+
+z17 = vhf XOR tdv
+    vhf = X17 XOR y17
+  Cin  = tdv
+    dbh = Y17 AND X17
+  Cout = dbh OR (vhf AND tdv) -> dbh OR vdn -> qcq
+
+z18 = rfk XOR qcq
+    rfk = X18 XOR y18
+  Cin  = qcq
+    smg = Y18 AND X18
+  Cout = smg OR (rfk AND qcq) -> smg OR mnr -> gbr
+
+z19 = fff XOR gbr
+    fff = X19 XOR y19
+  Cin  = gbr
+    tjk = Y19 AND X19
+  Cout = tjk OR (fff AND gbr) -> tjk OR mmp -> rbc
+
+z20 = bgs XOR rbc
+    bgs = X20 XOR y20
+  Cin  = rbc
+    njw = Y20 AND X20
+  Cout = njw OR (bgs AND rbc) -> njw OR bvb -> psj
+
+z21 = jfw XOR psj
+    jfw = X21 XOR y21
+  Cin  = psj
+    jpq = Y21 AND X21
+  Cout = jpq OR (jfw AND psj) -> jpq OR ffm -> nfn
+
+z22 = wkb XOR nfn
+    wkb = X22 XOR y22
+  Cin  = nfn
+    rkp = Y22 AND X22
+  Cout = rkp OR (wkb AND nfn) -> rkp OR tgj -> scw
+
+z23 = mfr XOR scw
+    mfr = X23 XOR y23
+  Cin  = scw
+    rkp = Y23 AND X23
+  Cout = rkp OR (mfr AND scw) -> rkp OR tgj -> scw
+
+... 
+
+z34 = kjb XOR bcm
+    kjb = X34 XOR y34
+  Cin  = bcm
+    tfn = Y34 AND X34
+  Cout = tfn OR (kjb AND bcm) -> tfn OR kbp -> tdg
+
+z35 = sjk XOR tdg
+    sjk = X35 XOR y35
+  Cin  = tdg
+    ddp = Y35 AND X35
+  Cout = ddp OR (sjk AND tdg) -> ddp OR ctf -> rdh
+
+z36 = wvp XOR rdh
+    wvp = X36 XOR y36
+  Cin  = rdh
+    mdk = Y36 AND X36
+  Cout = mdk OR (wvp AND rdh) -> mdk OR cbd -> ghr
+
+z37 = tjp XOR ghr
+    tjp = X37 XOR y37
+  Cin  = ghr
+    mdk = Y37 AND X37
+  Cout = mdk OR (tjp AND ghr) -> mdk OR cbd -> ghr
+
